@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "removeComments": false,
+    "outDir": "./dist",
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "jsx": "react",
+    "lib": ["DOM", "ESNEXT"],
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
+    "module": "ES2022",
+    "target": "ES6",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "exclude": ["./dist"],
+  "include": ["./src/**/*"]
+}
