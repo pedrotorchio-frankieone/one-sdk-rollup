@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 
 const App: FC = () => {
   useEffect(initialiseOneSdk);
-  return <div>Customer UI</div>;
+  return <div>Your UI here. OneSDK is running in "dummy" mode. Open the browser's console to view logs from OneSDK</div>;
 };
 
 function initialiseOneSdk() {
@@ -16,16 +16,19 @@ function initialiseOneSdk() {
     ocr.on("input_required", ocrInputRequiredCallback);
   })
   return () => {
-    const ocr = oneSdkInstance.component("ocr");
-    ocr.off("input_required", ocrInputRequiredCallback);
+    if (oneSdkInstance) {
+      const ocr = oneSdkInstance.component("ocr");
+      ocr.off("input_required", ocrInputRequiredCallback);
+    }
   }
 }
 
 function ocrInputRequiredCallback(info, error, provideFile) {
-  alert(`
-    input_required
-    ${JSON.stringify(info, null, 2)}
-    ${JSON.stringify(error, null, 2)}`
+  console.log(`
+    OCR:input_required event(
+    \t${JSON.stringify(info, null, 2)},
+    \t${JSON.stringify(error, null, 2)}
+    )`
   );
 }
 
