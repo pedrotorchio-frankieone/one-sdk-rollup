@@ -1,18 +1,24 @@
-import OneSDK, { SdkMode } from "@frankieone/one-sdk";
+import OneSDK, { OneSdkContext, SdkMode } from "@frankieone/one-sdk";
 import React, { FC, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 
 const App: FC = () => {
-  useEffect(() => void useOneSDK());
+  useEffect(initialiseOneSdk);
   return <div>Customer UI</div>;
 };
 
-async function useOneSDK() {
-  const oneSdk = await OneSDK({ mode: SdkMode.DUMMY });
-  const ocr = oneSdk.component("ocr");
-  ocr.start();
-  ocr.on("input_required", ocrInputRequiredCallback);
-  ocr.off("input_required", ocrInputRequiredCallback)
+function initialiseOneSdk() {
+  let oneSdkInstance: OneSdkContext;
+  OneSDK({ mode: SdkMode.DUMMY }).then(oneSdk => {
+    oneSdkInstance = oneSdk;
+    const ocr = oneSdk.component("ocr");
+    ocr.start();
+    ocr.on("input_required", ocrInputRequiredCallback);
+  })
+  return () => {
+    const ocr = oneSdkInstance.component("ocr");
+    ocr.off("input_required", ocrInputRequiredCallback);
+  }
 }
 
 function ocrInputRequiredCallback(info, error, provideFile) {
