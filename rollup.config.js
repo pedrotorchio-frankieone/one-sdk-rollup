@@ -9,7 +9,6 @@ import html from "rollup-plugin-generate-html-template";
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 import replace from "rollup-plugin-replace";
 
-
 export default {
   input: "src/index.tsx",
   output: [
